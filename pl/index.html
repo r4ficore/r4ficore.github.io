@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>R4FICORE // PL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #E0E0E0;
+            --accent-color: #00FF9C;
+            --muted-color: #B0B0B0;
+            --subtle-color: #888;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            letter-spacing: 0.7em;
+            font-size: 2.2em;
+            color: var(--accent-color);
+            margin-bottom: 2em;
+        }
+
+        p {
+            margin: 0.4em 0;
+            font-size: 1em;
+            color: var(--muted-color);
+        }
+
+        .subtitle {
+            margin-top: 1.2em;
+            font-style: italic;
+            color: var(--subtle-color);
+            font-size: 0.9em;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 3em;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #00d97d;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.6em;
+                letter-spacing: 0.4em;
+            }
+
+            .button {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+
+            p {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>R&nbsp;&nbsp;4&nbsp;&nbsp;F&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;E</h1>
+
+    <div class="identity">
+        <p>Architekt autonomicznych systemów AI.</p>
+        <p>Twórca frameworka SIGNALCORE.</p>
+        <p>Operator, strateg, inżynier promptów.</p>
+        <p class="subtitle">r4ficore — umysł wewnątrz maszyny.</p>
+    </div>
+
+    <a href="manifest.html" class="button">MANIFEST R4FICORE</a>
+</body>
+</html>
