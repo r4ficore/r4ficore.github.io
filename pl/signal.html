@@ -11,6 +11,12 @@
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
     h1 {
@@ -58,7 +64,7 @@
 
   <p>Nie powinieneś tu być.</p>
   <p>Ale system odpowiedział.</p>
-  <p>Możesz przejść dalej.</p>
+  <p>Możesz przejść dalej...∆</p>
 
   <div class="log">[trace-id: r4f-PL-47x] :: połączenie przywrócone // tryb echo aktywny</div>
 
@@ -73,11 +79,9 @@
 
     button.addEventListener("click", function (e) {
       e.preventDefault();
-
       try {
         audio.play().catch(() => {});
       } catch (err) {}
-
       window.open(redirectUrl, '_blank');
     });
   </script>
