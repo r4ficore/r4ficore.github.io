@@ -67,25 +67,38 @@
     <!-- 👁️‍🗨️ WHISPER INJECTOR v3.0 -->
     <script>
     (function(){
-      const url = "pl/onyx.wav"; // 🔊 Plik audio znajduje się w folderze /pl/
+      const url = "pl/onyx.wav"; // 🔊 Link do Twojego pliku audio
 
-      let context = new (window.AudioContext || window.webkitAudioContext)();
-      let gain = context.createGain();
-      gain.gain.value = 0.8;
+      const context = new (window.AudioContext || window.webkitAudioContext)();
+      const gain = context.createGain();
+      gain.gain.value = 0.9;
 
-      fetch(url)
-        .then(res => res.arrayBuffer())
-        .then(buf => context.decodeAudioData(buf))
-        .then(decoded => {
-          let src = context.createBufferSource();
-          src.buffer = decoded;
-          src.connect(gain).connect(context.destination);
-          src.start(0);
-        });
+      async function loadAndPlay() {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error("Nie można pobrać audio");
+          const arrayBuffer = await response.arrayBuffer();
+          const audioBuffer = await context.decodeAudioData(arrayBuffer);
+          const source = context.createBufferSource();
+          source.buffer = audioBuffer;
+          source.connect(gain).connect(context.destination);
+          source.start(0);
+          console.log("[AUDIO] ⏺️ odtwarzanie rozpoczęte");
+        } catch (err) {
+          console.error("[AUDIO] ❌ błąd:", err);
+        }
+      }
 
-      window.addEventListener('mousemove', () => {
-        if (context.state === 'suspended') context.resume();
-      }, { once: true });
+      if (context.state === 'suspended') {
+        window.addEventListener('mousemove', () => {
+          context.resume().then(() => {
+            console.log("[AUDIO] 🟢 kontekst wznowiony");
+            loadAndPlay();
+          });
+        }, { once: true });
+      } else {
+        loadAndPlay();
+      }
     })();
     </script>
 </body>
