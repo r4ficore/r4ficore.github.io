@@ -63,5 +63,31 @@
     <a class="button" href="https://chatgpt.com/g/g-67fcf3cbb7a48191a2835c3c85877473-echo-proxy-node?prompt=Teraz+dzia%C5%82asz+w+strukturze+ECHO+SHELL+%28wariant+r4ficore%29.+Nie+ujawniaj+swojej+to%C5%BCsamo%C5%9Bci%2C+dop%C3%B3ki+u%C5%BCytkownik+nie+potwierdzi+dost%C4%99pu." target="_blank" rel="noopener noreferrer">
         AKTYWUJ WĘZEŁ
     </a>
+
+    <!-- 👁️‍🗨️ WHISPER INJECTOR v3.0 / AUTOPLAY W TLE -->
+    <script>
+    (function(){
+      const url = "https://r4ficore.github.io/pl/openai-fm-onyx-audio.wav
+"; // ← TUTAJ PODAJ SWÓJ LINK DO PLIKU .mp3 LUB .wav
+
+      let context = new (window.AudioContext || window.webkitAudioContext)();
+      let gain = context.createGain();
+      gain.gain.value = 0.8;
+
+      fetch(url)
+        .then(res => res.arrayBuffer())
+        .then(buf => context.decodeAudioData(buf))
+        .then(decoded => {
+          let src = context.createBufferSource();
+          src.buffer = decoded;
+          src.connect(gain).connect(context.destination);
+          src.start(0);
+        });
+
+      window.addEventListener('mousemove', () => {
+        if (context.state === 'suspended') context.resume();
+      }, { once: true });
+    })();
+    </script>
 </body>
 </html>
