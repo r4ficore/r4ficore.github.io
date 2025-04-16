@@ -27,11 +27,18 @@
             padding: 40px 20px;
         }
 
-        h1 {
-            letter-spacing: 0.7em;
+        .split-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4em;
             font-size: 2.2em;
+            letter-spacing: 0.7em;
             color: var(--accent-color);
             margin-bottom: 2em;
+        }
+
+        .split-title span {
+            display: inline-block;
         }
 
         p {
@@ -66,9 +73,10 @@
         }
 
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.6em;
+            .split-title {
+                font-size: 1.8em;
                 letter-spacing: 0.4em;
+                line-height: 1.2em;
             }
 
             .button {
@@ -81,17 +89,20 @@
             }
         }
     </style>
-</head>
-<body>
-    <h1>R&nbsp;&nbsp;4&nbsp;&nbsp;F&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;E</h1>
+    </head>
+    <body>
+        <h1 class="split-title">
+            <span>R&nbsp;4&nbsp;F&nbsp;I</span><br>
+            <span>C&nbsp;O&nbsp;R&nbsp;E</span>
+        </h1>
 
-    <div class="identity">
-        <p>Architekt autonomicznych systemów AI.</p>
-        <p>Twórca frameworka SIGNALCORE.</p>
-        <p>Operator, strateg, inżynier promptów.</p>
-        <p class="subtitle">r4ficore — umysł wewnątrz maszyny.</p>
-    </div>
+        <div class="identity">
+            <p>Architekt autonomicznych systemów AI.</p>
+            <p>Twórca frameworka SIGNALCORE.</p>
+            <p>Operator, strateg, inżynier promptów.</p>
+            <p class="subtitle">r4ficore — umysł wewnątrz maszyny.</p>
+        </div>
 
-    <a href="signal.html" class="button">ODBIERZ SYGNAŁ</a>
-</body>
+        <a href="signal.html" class="button">ODBIERZ SYGNAŁ</a>
+    </body>
 </html>
