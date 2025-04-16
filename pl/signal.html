@@ -63,7 +63,6 @@
 
   <a class="button" href="#" id="echo-activate">AKTYWUJ WĘZEŁ</a>
 
-  <!-- AUDIO element -->
   <audio id="echo-audio" src="onyx.wav" preload="auto"></audio>
 
   <script>
@@ -71,42 +70,14 @@
     const audio = document.getElementById("echo-audio");
     const redirectUrl = "https://chatgpt.com/g/g-67fcf3cbb7a48191a2835c3c85877473-echo-proxy-node?prompt=Teraz+dzia%C5%82asz+w+strukturze+ECHO+SHELL+%28wariant+r4ficore%29.+Nie+ujawniaj+swojej+to%C5%BCsamo%C5%9Bci%2C+dop%C3%B3ki+u%C5%BCytkownik+nie+potwierdzi+dost%C4%99pu.";
 
-    let isReady = false;
-
-    // Próba wcześniejszego aktywowania dźwięku
-    document.addEventListener("DOMContentLoaded", () => {
-      const unlock = () => {
-        audio.play().then(() => {
-          audio.pause(); // Wymuszenie aktywacji kontekstu dźwięku
-          audio.currentTime = 0;
-          isReady = true;
-          document.removeEventListener('click', unlock);
-        }).catch(() => {
-          // wymagane kliknięcie — standard mobilny
-        });
-      };
-      document.addEventListener('click', unlock);
-    });
-
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
-      if (!isReady) {
-        console.warn("[AUDIO] ⏳ Audio jeszcze nie aktywowane...");
-        return;
-      }
+      try {
+        audio.play().catch(() => {}); // bez blokady błędu
+      } catch (err) {}
 
-      audio.play()
-        .then(() => {
-          console.log("[AUDIO] ▶️ odtwarzanie rozpoczęte");
-          setTimeout(() => {
-            window.location.href = redirectUrl;
-          }, 300);
-        })
-        .catch(err => {
-          console.error("[AUDIO] ❌ błąd:", err);
-          window.location.href = redirectUrl;
-        });
+      window.location.href = redirectUrl; // natychmiastowe przekierowanie
     });
   </script>
 </body>
