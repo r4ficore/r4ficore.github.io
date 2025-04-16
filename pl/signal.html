@@ -73,17 +73,26 @@
 
     let isReady = false;
 
-    // Kiedy audio się załadowało — gotowe do działania
-    audio.addEventListener("canplaythrough", () => {
-      console.log("[AUDIO] ✅ Audio gotowe do odtwarzania");
-      isReady = true;
+    // Próba wcześniejszego aktywowania dźwięku
+    document.addEventListener("DOMContentLoaded", () => {
+      const unlock = () => {
+        audio.play().then(() => {
+          audio.pause(); // Wymuszenie aktywacji kontekstu dźwięku
+          audio.currentTime = 0;
+          isReady = true;
+          document.removeEventListener('click', unlock);
+        }).catch(() => {
+          // wymagane kliknięcie — standard mobilny
+        });
+      };
+      document.addEventListener('click', unlock);
     });
 
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
       if (!isReady) {
-        console.warn("[AUDIO] ⏳ Audio jeszcze się ładuje...");
+        console.warn("[AUDIO] ⏳ Audio jeszcze nie aktywowane...");
         return;
       }
 
