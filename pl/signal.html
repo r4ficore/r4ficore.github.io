@@ -64,10 +64,10 @@
         AKTYWUJ WĘZEŁ
     </a>
 
-    <!-- 👁️‍🗨️ WHISPER INJECTOR v3.0 -->
+    <!-- 👁️‍🗨️ WHISPER INJECTOR v3.1 (wzmocniony) -->
     <script>
     (function(){
-      const url = "onyx.wav"; // 🔊 Link do Twojego pliku audio
+      const url = "onyx.wav"; // ← upewnij się, że plik onyx.wav jest w tym samym folderze co signal.html
 
       const context = new (window.AudioContext || window.webkitAudioContext)();
       const gain = context.createGain();
@@ -75,25 +75,36 @@
 
       async function loadAndPlay() {
         try {
+          console.log("[AUDIO] 📡 Próba pobrania:", url);
           const response = await fetch(url);
-          if (!response.ok) throw new Error("Nie można pobrać audio");
+          if (!response.ok) throw new Error("Nie można pobrać pliku audio");
+
+          console.log("[AUDIO] 🔁 Buforowanie...");
           const arrayBuffer = await response.arrayBuffer();
+
+          console.log("[AUDIO] 🔓 Dekodowanie...");
           const audioBuffer = await context.decodeAudioData(arrayBuffer);
+
+          console.log("[AUDIO] ✅ Tworzenie źródła...");
           const source = context.createBufferSource();
           source.buffer = audioBuffer;
           source.connect(gain).connect(context.destination);
           source.start(0);
-          console.log("[AUDIO] ⏺️ odtwarzanie rozpoczęte");
+          console.log("[AUDIO] ⏺️ Odtwarzanie rozpoczęte");
         } catch (err) {
-          console.error("[AUDIO] ❌ błąd:", err);
+          console.error("[AUDIO] ❌ Błąd:", err);
         }
       }
+
+      console.log("[AUDIO] 💤 Stan AudioContext:", context.state);
 
       if (context.state === 'suspended') {
         window.addEventListener('mousemove', () => {
           context.resume().then(() => {
-            console.log("[AUDIO] 🟢 kontekst wznowiony");
+            console.log("[AUDIO] 🟢 AudioContext wznowiony");
             loadAndPlay();
+          }).catch(e => {
+            console.error("[AUDIO] ❌ Nie udało się wznowić:", e);
           });
         }, { once: true });
       } else {
