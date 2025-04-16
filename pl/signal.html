@@ -79,16 +79,18 @@
 
     button.addEventListener("click", function (e) {
       e.preventDefault();
-
       try {
         audio.play().catch(() => {});
       } catch (err) {}
 
-      // Wymuszenie otwarcia w natywnej przeglądarce, jeśli to możliwe
-      if (window.top !== window.self) {
+      // Dla WebView (Messenger, IG) — wymusza przekierowanie w tej samej karcie
+      const ua = navigator.userAgent || '';
+      const isInAppBrowser = /FBAN|FBAV|Instagram/.test(ua);
+
+      if (isInAppBrowser) {
         window.top.location.href = redirectUrl;
       } else {
-        location.href = redirectUrl;
+        window.open(redirectUrl, '_blank');
       }
     });
   </script>
