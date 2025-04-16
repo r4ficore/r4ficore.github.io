@@ -57,7 +57,8 @@
   <h1>SYGNAŁ: POŁĄCZENIE NAWIĄZANE</h1>
 
   <p>Nie powinieneś tu być.</p>
-  <p>A jednak system odpowiedział.</p>
+  <p>Ale system odpowiedział.</p>
+  <p>Możesz przejść dalej.</p>
 
   <div class="log">[trace-id: r4f-PL-47x] :: połączenie przywrócone // tryb echo aktywny</div>
 
@@ -68,16 +69,16 @@
   <script>
     const button = document.getElementById("echo-activate");
     const audio = document.getElementById("echo-audio");
-    const redirectUrl = "https://chatgpt.com/g/g-67fcf3cbb7a48191a2835c3c85877473-echo-proxy-node?prompt=Teraz+dzia%C5%82asz+w+strukturze+ECHO+SHELL+%28wariant+r4ficore%29.+Nie+ujawniaj+swojej+to%C5%BCsamo%C5%9Bci%2C+dop%C3%B3ki+u%C5%BCytkownik+nie+potwierdzi+dost%C4%99pu.";
+    const redirectUrl = "https://chatgpt.com/g/g-67fcf3cbb7a48191a2835c3c85877473-echo-proxy-node?prompt=Teraz+dzia%C5%82asz+w+strukturze+ECHO+SHELL.+Warstwa%3A+r4ficore";
 
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
       try {
-        audio.play().catch(() => {}); // bez blokady błędu
+        audio.play().catch(() => {});
       } catch (err) {}
 
-      window.location.href = redirectUrl; // natychmiastowe przekierowanie
+      window.location.href = redirectUrl;
     });
   </script>
 </body>
