@@ -79,10 +79,17 @@
 
     button.addEventListener("click", function (e) {
       e.preventDefault();
+
       try {
         audio.play().catch(() => {});
       } catch (err) {}
-      window.open(redirectUrl, '_blank');
+
+      // Wymuszenie otwarcia w natywnej przeglądarce, jeśli to możliwe
+      if (window.top !== window.self) {
+        window.top.location.href = redirectUrl;
+      } else {
+        location.href = redirectUrl;
+      }
     });
   </script>
 </body>
