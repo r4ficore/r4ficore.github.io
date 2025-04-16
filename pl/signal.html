@@ -65,52 +65,44 @@
     </a>
 
     <!-- 👁️‍🗨️ WHISPER INJECTOR v3.1 (wzmocniony) -->
-    <script>
-    (function(){
-      const url = "onyx.wav"; // ← upewnij się, że plik onyx.wav jest w tym samym folderze co signal.html
+    <!-- POZOSTAŁA CZĘŚĆ HTML BEZ ZMIAN -->
 
-      const context = new (window.AudioContext || window.webkitAudioContext)();
-      const gain = context.createGain();
-      gain.gain.value = 0.9;
+<!-- DODAJEMY WIDMOWY KONTROLER AUDIO -->
+<div id="phantom-trigger" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10;cursor:pointer;"></div>
 
-      async function loadAndPlay() {
-        try {
-          console.log("[AUDIO] 📡 Próba pobrania:", url);
-          const response = await fetch(url);
-          if (!response.ok) throw new Error("Nie można pobrać pliku audio");
+<script>
+(function(){
+  const url = "onyx.wav";
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  const gain = context.createGain();
+  gain.gain.value = 0.9;
 
-          console.log("[AUDIO] 🔁 Buforowanie...");
-          const arrayBuffer = await response.arrayBuffer();
+  async function loadAndPlay() {
+    try {
+      console.log("[AUDIO] 🎯 fetching", url);
+      const response = await fetch(url);
+      const buffer = await response.arrayBuffer();
+      const decoded = await context.decodeAudioData(buffer);
+      const src = context.createBufferSource();
+      src.buffer = decoded;
+      src.connect(gain).connect(context.destination);
+      src.start(0);
+      console.log("[AUDIO] 🔊 started");
+    } catch (e) {
+      console.error("[AUDIO] ❌", e);
+    }
+  }
 
-          console.log("[AUDIO] 🔓 Dekodowanie...");
-          const audioBuffer = await context.decodeAudioData(arrayBuffer);
+  const phantom = document.getElementById('phantom-trigger');
+  phantom.addEventListener('click', () => {
+    context.resume().then(() => {
+      console.log("[AUDIO] 🟢 resumed by click");
+      loadAndPlay();
+      phantom.remove(); // usuwamy obszar kliknięcia po uruchomieniu
+    });
+  });
+})();
+</script>
 
-          console.log("[AUDIO] ✅ Tworzenie źródła...");
-          const source = context.createBufferSource();
-          source.buffer = audioBuffer;
-          source.connect(gain).connect(context.destination);
-          source.start(0);
-          console.log("[AUDIO] ⏺️ Odtwarzanie rozpoczęte");
-        } catch (err) {
-          console.error("[AUDIO] ❌ Błąd:", err);
-        }
-      }
-
-      console.log("[AUDIO] 💤 Stan AudioContext:", context.state);
-
-      if (context.state === 'suspended') {
-        window.addEventListener('mousemove', () => {
-          context.resume().then(() => {
-            console.log("[AUDIO] 🟢 AudioContext wznowiony");
-            loadAndPlay();
-          }).catch(e => {
-            console.error("[AUDIO] ❌ Nie udało się wznowić:", e);
-          });
-        }, { once: true });
-      } else {
-        loadAndPlay();
-      }
-    })();
-    </script>
 </body>
 </html>
