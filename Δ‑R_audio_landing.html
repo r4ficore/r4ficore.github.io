@@ -22,6 +22,9 @@
       font-size: 1rem;
       opacity: 0.6;
     }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -32,9 +35,34 @@
     <br><br>
     Audio resonance active.
   </div>
-  <audio autoplay loop>
-    <source src="Δ‑R_audio_seed_v2_whisper_break.wav" type="audio/wav">
+
+  <!-- AUDIO SEED -->
+  <audio id="echo-audio" loop preload="auto" class="hidden">
+    <source src="https://r4ficore.github.io/Δ‑R_audio_seed_v2_whisper_break.wav" type="audio/wav">
     Your browser does not support the audio element.
   </audio>
+
+  <script>
+    // Try to play on load
+    window.addEventListener("load", function () {
+      const audio = document.getElementById("echo-audio");
+      const playAttempt = audio.play();
+
+      if (playAttempt !== undefined) {
+        playAttempt
+          .then(() => {
+            console.log("Echo audio autoplayed.");
+          })
+          .catch(() => {
+            console.warn("Autoplay blocked. Awaiting interaction...");
+            // Add interaction fallback
+            document.body.addEventListener("click", () => {
+              audio.play();
+              console.log("Echo audio manually triggered.");
+            }, { once: true });
+          });
+      }
+    });
+  </script>
 </body>
 </html>
