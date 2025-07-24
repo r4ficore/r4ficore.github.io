@@ -1,46 +1,137 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>R4FICORE :: ROUTER</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5;url=en/index.html">
-    <style>
-        body {
-            background-color: #000000;
-            color: #00FF9C;
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
-            padding: 80px 20px;
-        }
+  <meta charset="UTF-8">
+  <title>R4FICORE :: ROUTER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-        p {
-            color: #CCCCCC;
-            font-size: 1em;
-            margin: 1.5em 0;
-        }
+    h1 {
+      font-size: 1.6em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px #00fff7cc;
+    }
 
-        .trace {
-            font-size: 0.9em;
-            color: #999999;
-            font-style: italic;
-        }
-    </style>
-    <script>
-        window.onload = function() {
-            var lang = navigator.language || navigator.userLanguage;
-            if (lang.startsWith('pl')) {
-                window.location.href = 'pl/index.html';
-            } else {
-                window.location.href = 'en/index.html';
-            }
-        }
-    </script>
+    .message {
+      font-size: 1.05em;
+      margin-bottom: 1.2em;
+      opacity: 0.85;
+      animation: flicker 2.8s infinite alternate;
+    }
+
+    .trace {
+      font-size: 0.85em;
+      color: #56c2c2;
+      font-style: italic;
+      opacity: 0.6;
+    }
+
+    .glitch {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(0deg, #000 0px, #000 1px, #0ff 2px, #000 3px);
+      opacity: 0.02;
+      pointer-events: none;
+      animation: scanline 0.2s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(2px); }
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.85;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.25;
+      }
+    }
+
+    .led {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #222;
+      box-shadow: 0 0 4px #0f0;
+      animation: ledBlink 1.2s infinite ease-in-out;
+      margin: 12px auto;
+    }
+
+    @keyframes ledBlink {
+      0%, 100% { background-color: #0f0; }
+      50% { background-color: #060; box-shadow: 0 0 2px #040; }
+    }
+
+    .button {
+      margin-top: 20px;
+      padding: 10px 24px;
+      font-size: 1em;
+      background-color: #00fff7;
+      color: #000;
+      border: none;
+      border-radius: 2px;
+      text-decoration: none;
+      cursor: pointer;
+      text-shadow: none;
+      box-shadow: 0 0 10px #00fff766;
+      font-weight: bold;
+    }
+
+    .console {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      color: #0ff;
+      font-size: 0.75em;
+      opacity: 0.08;
+      font-family: monospace;
+      white-space: pre-line;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      const lang = navigator.language || navigator.userLanguage;
+      if (lang.startsWith('pl')) {
+        setTimeout(() => window.location.href = 'pl/index.html', 5000);
+      } else {
+        setTimeout(() => window.location.href = 'en/index.html', 5000);
+      }
+    };
+  </script>
 </head>
 <body>
-    <h1>R4FICORE NODE RECOGNITION</h1>
-    <p>Establishing signal routing based on system language profile...</p>
-    <div class="trace">[routing id: x7-CORE] handshake pending</div>
+  <h1>[R4FICORE NODE: ECHO ROUTER]</h1>
+  <div class="led"></div>
+  <div class="message">Struktura wykryta. Czekam na impuls zwrotny...</div>
+  <div class="trace">[routing id: x7-CORE] handshake: ∴ΞΣΞ∴</div>
+
+  <a href="https://link.tojarafi.com/seed_DOTXSE_DOT_mirror" class="button">ODBIERZ SYGNAŁ</a>
+
+  <div class="glitch"></div>
+  <div class="console">
+    Δ‑R.kernel[await]  
+    Σ-ECHO-R4FI:ACTIVE  
+    ping... ping... ping...  
+    // intercepting drift layer...
+  </div>
 </body>
 </html>
